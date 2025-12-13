@@ -71,15 +71,15 @@
 
                         <li class="sidebar-title">Master Data</li>
 
-                        <li class="sidebar-item">
-                            <a href="#" class='sidebar-link'>
+                       <li class="sidebar-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
+                            <a href="{{ route('products.index') }}" class='sidebar-link'>
                                 <i class="bi bi-box-seam"></i>
                                 <span>Products</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->routeIs('suppliers.*') ? 'active' : '' }}">
+                            <a href="{{ route('suppliers.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people-fill"></i>
                                 <span>Suppliers</span>
                             </a>
