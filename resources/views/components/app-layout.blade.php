@@ -101,8 +101,8 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->routeIs('sales.*') ? 'active' : '' }}">
+                            <a href="{{ route('sales.index') }}" class='sidebar-link'>
                                 <i class="bi bi-bag-check-fill"></i>
                                 <span>Sales</span>
                             </a>

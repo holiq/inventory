@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Purchase;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class PurchaseDatatableController extends Controller
+class SaleDatatableController extends Controller
 {
     public function __invoke(Request $request)
     {
         if ($request->ajax()) {
-            $data = Purchase::with('supplier')->select('purchases.*');
+            $data = Sale::with('customer')->select('sales.*');
 
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('supplier_name', function ($row) {
-                    return $row->supplier->name ?? '-';
+                ->addColumn('customer_name', function ($row) {
+                    return $row->customer->name ?? '-';
                 })
                 ->addColumn('description', function ($row) {
                     return str($row->description)->limit(40);
@@ -25,8 +25,8 @@ class PurchaseDatatableController extends Controller
                     return $row->created_at->format('d M Y H:i');
                 })
                 ->addColumn('actions', function ($row) {
-                    $routeShow = route('purchases.show', $row->id);
-                    $routeEdit = route('purchases.edit', $row->id);
+                    $routeShow = route('sales.show', $row->id);
+                    $routeEdit = route('sales.edit', $row->id);
 
                     return <<<HTML
                     <div class="btn-group" role="group">

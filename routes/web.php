@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductDatatableController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDatatableController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SaleDatatableController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierDatatableController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +34,8 @@ Route::middleware('auth')->group(function () {
     // Purchase Management
     Route::get('purchases/datatable', PurchaseDatatableController::class)->name('purchases.datatable');
     Route::resource('purchases', PurchaseController::class);
+
+    // Sale Management
+    Route::get('sales/datatable', SaleDatatableController::class)->name('sales.datatable');
+    Route::resource('sales', SaleController::class);
 });
