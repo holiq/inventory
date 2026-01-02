@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Rupiah;
 use Illuminate\Database\Eloquent\Model;
 
 class PurchaseItem extends Model
@@ -12,6 +13,11 @@ class PurchaseItem extends Model
         'qty',
         'price',
         'total_price',
+    ];
+
+    protected $casts = [
+        'price' => Rupiah::class,
+        'total_price' => Rupiah::class,
     ];
 
     public function purchase()

@@ -94,8 +94,8 @@
 
                         <li class="sidebar-title">Transactions</li>
 
-                        <li class="sidebar-item">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->routeIs('purchases.*') ? 'active' : '' }}">
+                            <a href="{{ route('purchases.index') }}" class='sidebar-link'>
                                 <i class="bi bi-cart-plus-fill"></i>
                                 <span>Purchases</span>
                             </a>
@@ -161,6 +161,66 @@
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
     @stack('scripts')
+
+    <script>
+        function loadCurrencyFormat() {
+            $(document).off('input.currency', '.form-amount');
+            $(document).off('submit.currency', 'form');
+
+            $(document).on('input.currency', '.form-amount', function () {
+                $(this).val(formatCurrency($(this).val()));
+            });
+
+            $(document).on('submit.currency', 'form', function () {
+                $(this).find('.form-amount').each(function () {
+                    $(this).val(unformatCurrency($(this).val()));
+                });
+            });
+        }
+
+        function formatCurrency(value) {
+            let v = value ?? '';
+            v = String(v)
+                .replace(/^\s*Rp\s*/i, '')
+                .replace(/[^\d,]/g, '');
+
+            const rawParts = v.split(',');
+            let intPart = rawParts[0] || '';
+            let decPart = rawParts[1] || '';
+
+            if (rawParts.length > 2) {
+                decPart = rawParts.slice(1).join('');
+            }
+
+            if (decPart.length > 2) decPart = decPart.substring(0, 2);
+
+            intPart = intPart.replace(/^0+(?=\d)/, '');
+
+            const normalized = intPart + (decPart ? '.' + decPart : '');
+            if (normalized === '' || normalized === '.') return '';
+
+            const num = parseFloat(normalized);
+            if (isNaN(num)) return '';
+
+            const opts = decPart
+                ? { minimumFractionDigits: decPart.length, maximumFractionDigits: decPart.length }
+                : { maximumFractionDigits: 0 };
+
+            return num.toLocaleString('id-ID', opts);
+        }
+
+        function unformatCurrency(value) {
+            if (!value) return '';
+            return String(value)
+                .replace(/^\s*Rp\s*/i, '')
+                .replace(/\./g, '')
+                .replace(/,/g, '.');
+        }
+
+        $(document).ready(function() {
+            loadCurrencyFormat();
+        });
+    </script>
 </body>
 
 </html>
