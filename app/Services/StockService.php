@@ -11,34 +11,34 @@ class StockService
     /**
      * Process stock in (purchase, stock opname in, return, etc.)
      */
-    public function stockIn(int $productId, int $qty, float $price, string $type = 'purchase'): void
+    public function stockIn(int $productId, int $qty, float $price, string $type = 'purchase', ?string $note = null): void
     {
-        $this->createTransaction($productId, $qty, 0, $price, $type);
+        $this->createTransaction($productId, $qty, 0, $price, $type, $note);
         $this->updateStock($productId, $qty, 0);
     }
 
     /**
      * Process stock out (sale, stock opname out, etc.)
      */
-    public function stockOut(int $productId, int $qty, float $price, string $type = 'sale'): void
+    public function stockOut(int $productId, int $qty, float $price, string $type = 'sale', ?string $note = null): void
     {
-        $this->createTransaction($productId, 0, $qty, $price, $type);
+        $this->createTransaction($productId, 0, $qty, $price, $type, $note);
         $this->updateStock($productId, 0, $qty);
     }
 
     /**
      * Process stock adjustment (for stock opname - can be in or out)
      */
-    public function stockAdjustment(int $productId, int $qtyIn, int $qtyOut, float $price, string $type = 'adjustment'): void
+    public function stockAdjustment(int $productId, int $qtyIn, int $qtyOut, float $price, string $type = 'adjustment', ?string $note = null): void
     {
-        $this->createTransaction($productId, $qtyIn, $qtyOut, $price, $type);
+        $this->createTransaction($productId, $qtyIn, $qtyOut, $price, $type, $note);
         $this->updateStock($productId, $qtyIn, $qtyOut);
     }
 
     /**
      * Create product transaction history
      */
-    protected function createTransaction(int $productId, int $qtyIn, int $qtyOut, float $price, string $type): ProductTransaction
+    protected function createTransaction(int $productId, int $qtyIn, int $qtyOut, float $price, string $type, ?string $note = null): ProductTransaction
     {
         $totalQty = $qtyIn > 0 ? $qtyIn : $qtyOut;
 
@@ -50,6 +50,7 @@ class StockService
             'type' => $type,
             'price' => $price,
             'total_price' => $totalQty * $price,
+            'note' => $note,
         ]);
     }
 

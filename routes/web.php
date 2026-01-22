@@ -10,7 +10,12 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDatatableController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDatatableController;
+use App\Http\Controllers\StockOpnameController;
+use App\Http\Controllers\StockReportController;
+use App\Http\Controllers\StockReportDatatableController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransactionReportController;
+use App\Http\Controllers\TransactionReportDatatableController;
 use App\Http\Controllers\SupplierDatatableController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +43,12 @@ Route::middleware('auth')->group(function () {
     // Sale Management
     Route::get('sales/datatable', SaleDatatableController::class)->name('sales.datatable');
     Route::resource('sales', SaleController::class);
+
+    // Reports
+    Route::get('reports/stock', [StockReportController::class, 'index'])->name('stock-report.index');
+    Route::get('reports/stock/datatable', StockReportDatatableController::class)->name('stock-report.datatable');
+    Route::get('reports/stock-opname', [StockOpnameController::class, 'index'])->name('stock-opname.index');
+    Route::post('reports/stock-opname', [StockOpnameController::class, 'store'])->name('stock-opname.store');
+    Route::get('reports/transaction', [TransactionReportController::class, 'index'])->name('transaction-report.index');
+    Route::get('reports/transaction/datatable', TransactionReportDatatableController::class)->name('transaction-report.datatable');
 });

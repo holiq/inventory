@@ -14,6 +14,7 @@ class ProductTransaction extends Model
         'type',
         'price',
         'total_price',
+        'note',
     ];
 
     public function product()

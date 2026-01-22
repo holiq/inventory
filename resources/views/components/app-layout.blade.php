@@ -110,15 +110,22 @@
 
                         <li class="sidebar-title">Reports</li>
 
-                        <li class="sidebar-item">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->routeIs('stock-report.*') ? 'active' : '' }}">
+                            <a href="{{ route('stock-report.index') }}" class='sidebar-link'>
                                 <i class="bi bi-archive-fill"></i>
                                 <span>Stock Report</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->routeIs('stock-opname.*') ? 'active' : '' }}">
+                            <a href="{{ route('stock-opname.index') }}" class='sidebar-link'>
+                                <i class="bi bi-clipboard-check"></i>
+                                <span>Stock Opname</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item {{ request()->routeIs('transaction-report.*') ? 'active' : '' }}">
+                            <a href="{{ route('transaction-report.index') }}" class='sidebar-link'>
                                 <i class="bi bi-journal-text"></i>
                                 <span>Transaction Report</span>
                             </a>
